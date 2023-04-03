@@ -3,22 +3,15 @@ const Engineer = require('./lib/engineer');
 const Manager = require('./lib/manager');
 const Intern  = require('./lib/intern');
 const inquirer = require('inquirer');
+var employeeDatabase = require('./test-database.json');
 const fs = require('fs');
-const writer = require('writer');
+const htmlPage = require('./src/render-html.js');
+
 //**********Variables********** */
-// state = "mainMenu";
 let logMode = 1;
 let debugMode = 1;
-
-//**********Database*********** */
-var employeeDatabase = {
-    managers: [],
-    engineers: [],
-    interns: [],
-    employees: []
-};
-
 //**********Prompts************ */
+
 const mainMenuChoices = ["Add new Manager", "Add new Engineer", "Add new Intern", "View database", "Finish"];
 
 const managerQuestions = 
@@ -53,15 +46,32 @@ const mainMenuQuestions =
     }
 ;
 //***********START************* */
-console.log(`\nWelcome to the Team Profile Generator!\n
-Create a profile of your team by inputting the information of 
-each member. When finished, a webpage with the team information 
-will be created and displayed.\n`);
 init();
+
+function init(){
+
+    console.log(`\nWelcome to the Team Profile Generator!\n
+    Create a profile of your team by inputting the information of 
+    each member. When finished, a webpage with the team information 
+    will be created and displayed.\n`);
+
+    console.log(`\nSettings: logMode: ${logMode} debugMode: ${debugMode}`);
+
+    if(debugMode === 0){
+        employeeDatabase = {
+            "managers": [],
+            "engineers": [],
+            "interns": [],
+            "employees": []
+        };
+    };
+    navMainMenu();
+}
+
 
 /************FUNCTIONS********* */
 
-function init(){
+function navMainMenu(){
     const state = "mainMenu";
     applyState(state);
 };
@@ -99,14 +109,30 @@ function applyState(state){
                 log('Database:');-
                 console.log(employeeDatabase);
             }
-            init();
+            navMainMenu();
             break;
     
         case "Finish":
             log("STATE: Finish","debug");
+            renderHTML(employeeDatabase);
             break;
     };
 }
+
+function renderHTML(database){
+    log('Rendering HTML Page...','debug');
+    const options = {
+        "logMode": logMode,
+        "debugMode":  debugMode
+    };
+    const html = new htmlPage(database,options);
+    html.clearPage();
+    html.addHead();
+    html.addHeader();
+    html.addFooter();
+    html.addMainContent();
+    log('HTML Page Complete...','debug');
+};
 
 function checkAnswers(answers){
     log(`Checking answer ${Object.keys(answers)} : ${answers[Object.keys(answers)]}`,"debug");
