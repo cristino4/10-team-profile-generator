@@ -1,0 +1,82 @@
+{
+    "managers": [
+        {
+            "name": "Cristino Castro",
+            "id": "1",
+            "email": "cristinocastro4@gmail.com",
+            "officeNumber": "34A"
+        },
+        {
+            "name": "Michael Cohen",
+            "id": "2",
+            "email": "mcohen@gmail.com",
+            "officeNumber": "33A"
+        }
+    ],
+    "engineers": [
+        {
+            "name": "John Speck",
+            "id": "3",
+            "email": "johnspeck@gmail.com",
+            "github": "john_github"
+        },
+        {
+            "name": "Steven Rights",
+            "id": "4",
+            "email": "steve@gmail.com",
+            "github": "github2" 
+        }
+    ],
+    "interns": [
+        {
+            "name": "Tom White",
+            "id": "5",
+            "email": "tommywhite@gmail.com",
+            "school": "UCLA"
+        },
+        {
+            "name": "Pedro Infante",
+            "id": "6",
+            "email": "pedro@gmail.com",
+            "school": "USC"
+        }
+    ],
+    "employees": [
+        {
+            "name": "Cristino Castro",
+            "id": "1",
+            "email": "cristinocastro4@gmail.com",
+            "officeNumber": "34A"
+        },
+        {
+            "name": "Michael Cohen",
+            "id": "2",
+            "email": "mcohen@gmail.com",
+            "officeNumber": "33A"
+        },
+        {
+            "name": "John Speck",
+            "id": "3",
+            "email": "johnspeck@gmail.com",
+            "github": "john_github"
+        },
+        {
+            "name": "Steven Rights",
+            "id": "4",
+            "email": "steve@gmail.com",
+            "github": "github2" 
+        },
+        {
+            "name": "Tom White",
+            "id": "5",
+            "email": "tommywhite@gmail.com",
+            "school": "UCLA"
+        },
+        {
+            "name": "Pedro Infante",
+            "id": "6",
+            "email": "pedro@gmail.com",
+            "school": "USC"
+        }
+    ]
+}
