@@ -3,7 +3,7 @@ const Engineer = require ('../lib/engineer');
 describe('Engineer', () => {
     describe('Initialization',() => {
         test('When an object is created, it should containe a name, id, email, github and role "Engineer"', () => {
-            const obj = new Engineer("testName",1,"testEmail","testGithub");
+            const obj = new Engineer("testName","1","testEmail","testGithub");
             expect("name" in obj).toEqual(true);
             expect("id" in obj).toEqual(true);
             expect("email" in obj).toEqual(true);
@@ -18,18 +18,18 @@ describe('Engineer', () => {
 
         test('When an object is created with no id, it should throw an error', () => {
             const cb = () => new Engineer("testName", "testEmail", "testGithub");
-            const err = new Error("Expected parameter 'id' to be a non-negative number");
+            const err = new Error("Expected parameter 'id' to be a non-empty number string");
             expect(cb).toThrow(err);
         });
 
         test('When an object is created with no email, it should throw an error', () => {
-            const cb = () => new Engineer("testName", 1);
+            const cb = () => new Engineer("testName", "1");
             const err = new Error("Expected parameter 'email' to be a non-empty string");
             expect(cb).toThrow(err);
         });
 
         test('When an object is created with no github, it should throw an error', () => {
-            const cb = () => new Engineer("testName", 1,"testEmail");
+            const cb = () => new Engineer("testName", "1","testEmail");
             const err = new Error("Expected parameter 'github' to be a non-empty string");
             expect(cb).toThrow(err);
         });
@@ -38,7 +38,7 @@ describe('Engineer', () => {
     describe("Print Status", () => {
         test("Should return an array of parameters", () => {
             const name = "testName";
-            const id = 1;
+            const id = "1";
             const email = "hello@gmail.com";
             const github = "wakpak";
             const role = "Engineer";
@@ -51,7 +51,7 @@ describe('Engineer', () => {
     describe('GET Role', () => {
         test('Should return the Engineer Role', () => {
             const name = "testName";
-            const id = 1;
+            const id = "1";
             const email = "hello@gmail.com";
             const role = "Engineer";
             const github = "wakpak";
@@ -64,7 +64,7 @@ describe('Engineer', () => {
     describe('GET github', () => {
         test('Should return the Engineer github', () => {
             const name = "testName";
-            const id = 1;
+            const id = "1";
             const email = "hello@gmail.com";
             const role = "Engineer";
             const github = "wakpak";

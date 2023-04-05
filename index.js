@@ -9,7 +9,7 @@ const htmlPage = require('./src/render-html.js');
 
 //**********Variables********** */
 let logMode = 1;
-let debugMode = 1;
+let debugMode = 0;
 //**********Prompts************ */
 
 const mainMenuChoices = ["Add new Manager", "Add new Engineer", "Add new Intern", "View database", "Clear database", "Finish"];
