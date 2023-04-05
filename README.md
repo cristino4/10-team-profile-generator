@@ -19,9 +19,9 @@ To view the HTML file, open /dist/main/index.html on a web browser.
 
 ## Screenshot of the Application
 
-![Screenshot of the questions](./dist/main/assets/images/questions.png)
-![Screenshot of the menu](./dist/main/assets/images/menu.png)
-![Screenshot of the webpage](./dist/main/assets/images/webpage.png)
+![Screenshot of the questions](./dist/main/assets/images/questions.PNG)
+![Screenshot of the menu](./dist/main/assets/images/menu.PNG)
+![Screenshot of the webpage](./dist/main/assets/images/webpage.PNG)
 
 ## Repository and Video Demo
 
