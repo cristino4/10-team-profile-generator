@@ -9,10 +9,10 @@ const htmlPage = require('./src/render-html.js');
 
 //**********Variables********** */
 let logMode = 1;
-let debugMode = 1;
+let debugMode = 0;
 //**********Prompts************ */
 
-const mainMenuChoices = ["Add new Manager", "Add new Engineer", "Add new Intern", "View database", "Finish"];
+const mainMenuChoices = ["Add new Manager", "Add new Engineer", "Add new Intern", "View database", "Clear database", "Finish"];
 
 const managerQuestions = 
     {
@@ -112,26 +112,45 @@ function applyState(state){
             navMainMenu();
             break;
     
+        case "clearDatabase":
+            log("STATE: Clear Database","debug");
+            employeeDatabase = {
+                "managers": [],
+                "engineers": [],
+                "interns": [],
+                "employees": []
+            };
+            log("Database Cleared");
+            navMainMenu();
+            break;
+    
         case "Finish":
             log("STATE: Finish","debug");
+            const databaseString = JSON.stringify(employeeDatabase)
+            fs.writeFileSync('./employee-database.json', databaseString,  (err) => {
+                if (err) throw err;
+            });
+            log('Database stored to file');
             renderHTML(employeeDatabase);
             break;
     };
 }
 
 function renderHTML(database){
-    log('Rendering HTML Page...','debug');
+    log('Rendering HTML Page...');
     const options = {
         "logMode": logMode,
         "debugMode":  debugMode
     };
+
     const html = new htmlPage(database,options);
+    const dom = html.createDOM();
     html.clearPage();
-    html.addHead();
-    html.addHeader();
-    html.addFooter();
-    html.addMainContent();
-    log('HTML Page Complete...','debug');
+    html.populateEmployees(dom);
+
+    log('HTML Page Complete...');
+    log(`The webpage is available under dist/main/index.html.
+    Open index.html in a web browser to view the team profile.`)
 };
 
 function checkAnswers(answers){
@@ -156,19 +175,26 @@ function checkAnswers(answers){
         addManager(answers[Object.keys(answers)]);
         state = 'mainMenu';
         applyState(state);
+        return;
     } else if (Object.keys(answers).toString() === 'engineerInfo'){
         addEngineer(answers[Object.keys(answers)]);
         state = 'mainMenu';
         applyState(state);
+        return;
     } else if (Object.keys(answers).toString() === 'internInfo'){
         addIntern(answers[Object.keys(answers)]);
         state = 'mainMenu';
         applyState(state);
+        return;
     }  else if (answers[Object.keys(answers)] === "View database"){
         state = "viewDatabase";
         applyState(state);
         return;
-    };
+    } else if (answers[Object.keys(answers)] === "Clear database"){
+        state = "clearDatabase";
+        applyState(state);
+        return;
+    }
 };
 
 
