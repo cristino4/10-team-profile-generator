@@ -1,4 +1,7 @@
 const fs = require("fs");
+const jsdom = require("jsdom");
+
+
 
 class htmlPage {
     constructor(database,options){
@@ -15,43 +18,92 @@ class htmlPage {
         this.log("HTML Page Cleared", "debug");
     };
 
-    addHead(){
-        const headData = fs.readFileSync('./src/head.html','utf8',(err, data) => {
+    createDOM(){
+        const htmlTemplate = fs.readFileSync('./src/main-template.html','utf8',(err, data) => {
             if (err) throw err;
             this.log(data,"debug");
         });
-        fs.appendFileSync('./dist/main/index.html',headData,(err) => {
+        const dom = new jsdom.JSDOM(htmlTemplate);
+        return dom;
+    }
+
+    populateEmployees(dom){
+
+        const $= require('jquery')(dom.window);
+        const documentMain = $("main");
+
+        for(let i = 0; i<this.database.managers.length; i++){
+            const cardContainer = $("<div>",{class: "flex justify-center"});   
+            const cardBody = $("<div>", {class: "block max-w-sm rounded-lg bg-white p-6 shadow-lg dark:bg-neutral-700"});
+            const cardTitle = $("<p>",{class: "mb-2 text-xl font-medium"});
+            const cardRole = $("<p>",{class: "mb-2 text-xl font-medium"});
+            const cardId = $("<p>",{class: "mb-2 text-xl font-medium"});
+            const cardEmail = $("<a>",{class: "mb-2 text-xl font-medium block",href:`mailto:${this.database.managers[i].email}`});
+            const cardOfficeNumber = $("<p>",{class: "mb-2 text-xl font-medium"}); 
+            
+            cardTitle.text(this.database.managers[i].name);
+            cardRole.text("Manager");
+            cardId.text(`ID: ${this.database.managers[i].id}`);
+            cardEmail.text(`Email: ${this.database.managers[i].email}`);
+            cardOfficeNumber.text(`Office Number: ${this.database.managers[i].officeNumber}`);
+
+            cardBody.append([cardTitle,cardRole,cardId, cardEmail, cardOfficeNumber]);
+            cardContainer.append(cardBody);
+            documentMain.append(cardContainer)
+        };
+
+        this.log("Added Managers","debug");
+
+        for(let i = 0; i<this.database.engineers.length; i++){
+            const cardContainer = $("<div>",{class: "flex justify-center"});   
+            const cardBody = $("<div>", {class: "block max-w-sm rounded-lg bg-white p-6 shadow-lg dark:bg-neutral-700"});
+            const cardTitle = $("<p>",{class: "mb-2 text-xl font-medium"});
+            const cardRole = $("<p>",{class: "mb-2 text-xl font-medium"});
+            const cardId = $("<p>",{class: "mb-2 text-xl font-medium"});
+            const cardEmail = $("<a>",{class: "mb-2 text-xl font-medium block",href:`mailto:${this.database.engineers[i].email}`});
+            const cardGithub = $("<a>",{class: "mb-2 text-xl font-medium block",href:`https://github.com/${this.database.engineers[i].github}`}); 
+            
+            cardTitle.text(this.database.engineers[i].name);
+            cardRole.text("Engineer");
+            cardId.text(`ID: ${this.database.engineers[i].id}`);
+            cardEmail.text(`Email: ${this.database.engineers[i].email}`);
+            cardGithub.text(`Github: ${this.database.engineers[i].github}`);
+
+            cardBody.append([cardTitle,cardRole,cardId, cardEmail, cardGithub]);
+            cardContainer.append(cardBody);
+            documentMain.append(cardContainer)
+        };
+
+        this.log("Added Engineers", "debug");
+
+        for(let i = 0; i<this.database.interns.length; i++){
+            const cardContainer = $("<div>",{class: "flex justify-center"});   
+            const cardBody = $("<div>", {class: "block max-w-sm rounded-lg bg-white p-6 shadow-lg dark:bg-neutral-700"});
+            const cardTitle = $("<p>",{class: "mb-2 text-xl font-medium"});
+            const cardRole = $("<p>",{class: "mb-2 text-xl font-medium"});
+            const cardId = $("<p>",{class: "mb-2 text-xl font-medium"});
+            const cardEmail = $("<a>",{class: "mb-2 text-xl font-medium block",href:`mailto:${this.database.interns[i].email}`});
+            const cardSchool = $("<p>",{class: "mb-2 text-xl font-medium"}); 
+            
+            cardTitle.text(this.database.interns[i].name);
+            cardRole.text("Engineer");
+            cardId.text(`ID: ${this.database.interns[i].id}`);
+            cardEmail.text(`Email: ${this.database.interns[i].email}`);
+            cardSchool.text(`School: ${this.database.interns[i].school}`);
+
+            cardBody.append([cardTitle,cardRole,cardId, cardEmail, cardSchool]);
+            cardContainer.append(cardBody);
+            documentMain.append(cardContainer)
+        };        
+        
+        this.log("Added Interns", "debug");
+
+        const htmlContent = dom.serialize(); 
+        fs.writeFileSync('./dist/main/index.html',htmlContent,(err) => {
             if (err) throw err;
         });
-        this.log("HTML head added to page","debug");
-
-    };
-
-    addHeader(){
-        const headerData = fs.readFileSync('./src/header.html','utf8',(err, data) => {
-            if (err) throw err;
-            this.log(data,"debug");
-        });
-        fs.appendFileSync('./dist/main/index.html',headerData,(err) => {
-            if (err) throw err;
-        });
-        this.log("HTML header added to page","debug");
-    };
-
-    addMainContent(){
-
-    };
-
-    addFooter(){
-        const footerData = fs.readFileSync('./src/footer.html','utf8',(err, data) => {
-            if (err) throw err;
-            this.log(data,"debug");
-        });
-        fs.appendFileSync('./dist/main/index.html',footerData,(err) => {
-            if (err) throw err;
-        });
-        this.log("HTML footer added to page","debug");
-    };    
+        
+    }
 
     log(message,mode){
         const logMode = this.options.logMode;

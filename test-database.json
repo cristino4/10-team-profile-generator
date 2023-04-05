@@ -1,10 +1,10 @@
 {
     "managers": [
         {
-            "name": "Cristino Castro",
-            "id": "1",
-            "email": "cristinocastro4@gmail.com",
-            "officeNumber": "34A"
+            "name": "Steven Rights",
+            "id": "4",
+            "email": "steve@gmail.com",
+            "officeNumber": "2B" 
         },
         {
             "name": "Michael Cohen",
@@ -21,10 +21,10 @@
             "github": "john_github"
         },
         {
-            "name": "Steven Rights",
-            "id": "4",
-            "email": "steve@gmail.com",
-            "github": "github2" 
+            "name": "Cristino Castro",
+            "id": "1",
+            "email": "cristinocastro4@gmail.com",
+            "github": "cristino4"
         }
     ],
     "interns": [
